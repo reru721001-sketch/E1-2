@@ -1,11 +1,13 @@
 import json
 import os
 import random
+import shutil
 
 from quiz import Quiz
 from quiz_data import get_default_quizzes
 
 STATE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "state.json")
+BACKUP_FILE = STATE_FILE + ".bak"   # 손상된 파일을 보관할 백업 파일
 
 class QuizGame:
     """퀴즈 게임 전체를 관리하는 클래스"""
@@ -30,8 +32,17 @@ class QuizGame:
             print(f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개)")
         except (json.JSONDecodeError, KeyError, TypeError, OSError):
             print("⚠️ 데이터 파일이 손상되어 기본 퀴즈로 복구합니다.")
+            self.backup_broken_file()
             self.quizzes = get_default_quizzes()
             self.best_score = None
+
+    def backup_broken_file(self):
+        """손상된 state.json을 덮어쓰기 전에 state.json.bak으로 복사해 둔다."""
+        try:
+            shutil.copy(STATE_FILE, BACKUP_FILE)
+            print("💾 손상된 파일을 state.json.bak으로 백업했습니다.")
+        except OSError:
+            print("⚠️ 손상된 파일을 백업하지 못했습니다.")
 
     def save(self):
         """퀴즈와 최고 점수를 state.json에 저장한다."""
@@ -39,9 +50,11 @@ class QuizGame:
             "quizzes": [quiz.to_dict() for quiz in self.quizzes],
             "best_score": self.best_score,
         }
+        temp_file = STATE_FILE + ".tmp"
         try:
-            with open(STATE_FILE, "w", encoding="utf-8") as f:
+            with open(temp_file, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
+            os.replace(temp_file, STATE_FILE)   # 다 쓴 뒤에 한 번에 바꿔치기
         except OSError:
             print("⚠️ 파일 저장 중 오류가 발생했습니다.")
 
@@ -180,7 +193,7 @@ def main():
     try:
         game.run()
     except (KeyboardInterrupt, EOFError):
-        print("\n\n⚠️ 입력이 중단되었습니다. 프로그램을 종료합니다.")
+        print("\n\n⚠️ 입력이 중단되었습니다. 저장 후 종료합니다.")
         game.save()
 
 
