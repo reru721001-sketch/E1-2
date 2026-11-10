@@ -66,6 +66,9 @@ class QuizGame:
         print()
         print("=" * 40)
         print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+        if self.best_score is None or score > self.best_score:
+            self.best_score = score
+            print("🎉 새로운 최고 점수입니다!")
         print("=" * 40)
 
     def get_text(self, prompt):
@@ -104,6 +107,13 @@ class QuizGame:
             print(f"[{number}] {quiz.question}")
         print("-" * 40) 
 
+    def show_score(self):
+        """최고 점수를 보여준다."""
+        if self.best_score is None:
+            print("⚠️ 아직 퀴즈를 풀지 않았습니다. 먼저 퀴즈를 풀어보세요!")
+            return
+        print(f"\n🏆 최고 점수: {self.best_score}점")
+
     def run(self):
         """프로그램의 메인 반복 흐름"""
         while True:
@@ -116,12 +126,12 @@ class QuizGame:
                 self.add_quiz()
             elif choice == 3:
                 self.show_quizzes()
-            elif choice == 5:
+            elif choice == 4:
+                self.show_score()
+            else:
                 print("👋 프로그램을 종료합니다.")
                 break
-            else:
-                print("🚧 아직 준비 중인 기능입니다.")
-
+            
 def main():
     game = QuizGame()
     try:
