@@ -1,5 +1,11 @@
+from quiz_data import get_default_quizzes
+
 class QuizGame:
     """퀴즈 게임 전체를 관리하는 클래스"""
+
+    def __init__(self):
+        self.quizzes = get_default_quizzes()   # 퀴즈 목록
+        self.best_score = None                 # 최고 점수 (None = 아직 안 풀어봄)
 
     def show_menu(self):
         """메뉴를 화면에 출력한다."""
