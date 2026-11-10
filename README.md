@@ -89,3 +89,4 @@ E1-2/
     "best_score": 80
 }
 ```
+> clone한 저장소에서 추가한 문장입니다. (clone/pull 실습)
