@@ -1,3 +1,4 @@
+from quiz import Quiz
 from quiz_data import get_default_quizzes
 
 class QuizGame:
@@ -67,6 +68,30 @@ class QuizGame:
         print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
         print("=" * 40)
 
+    def get_text(self, prompt):
+        """빈 문자열이 아닌 글자를 입력받을 때까지 반복한다."""
+        while True:
+            text = input(prompt).strip()
+            if text == "":
+                print("⚠️ 입력이 비어 있습니다. 다시 입력하세요.")
+                continue
+            return text
+
+    def add_quiz(self):
+        """사용자에게 문제, 선택지 4개, 정답을 입력받아 퀴즈를 추가한다."""
+        print("\n📌 새로운 퀴즈를 추가합니다.\n")
+        question = self.get_text("문제를 입력하세요: ")
+
+        choices = []
+        for i in range(1, 5):
+            choice = self.get_text(f"선택지 {i}: ")
+            choices.append(choice)
+
+        answer = self.get_number("정답 번호 (1-4): ", 1, 4)
+
+        self.quizzes.append(Quiz(question, choices, answer))
+        print("\n✅ 퀴즈가 추가되었습니다!")    
+
     def run(self):
         """프로그램의 메인 반복 흐름"""
         while True:
@@ -75,12 +100,13 @@ class QuizGame:
 
             if choice == 1:
                 self.play_quiz()
+            elif choice == 2:
+                self.add_quiz()
             elif choice == 5:
                 print("👋 프로그램을 종료합니다.")
                 break
             else:
                 print("🚧 아직 준비 중인 기능입니다.")
-
 
 def main():
     game = QuizGame()
