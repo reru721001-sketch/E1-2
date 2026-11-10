@@ -52,7 +52,9 @@ E1-2/
 ├── quiz_data.py   # 기본 퀴즈 5개를 만드는 함수
 ├── state.json     # 퀴즈 목록과 최고 점수 저장 파일
 ├── README.md      # 프로젝트 설명서
-└── .gitignore     # Git이 무시할 파일 목록
+├── .gitignore     # Git이 무시할 파일 목록
+└── docs/
+    └── screenshots/  # 실행 화면 스크린샷
 ```
 
 ### 클래스 구조
@@ -90,3 +92,29 @@ E1-2/
 }
 ```
 > clone한 저장소에서 추가한 문장입니다. (clone/pull 실습)
+
+
+## 8. 실행 화면 (Windows 11, Windows Terminal)
+
+### 개발 환경
+![개발 환경](docs/screenshots/env.png)
+
+### 메뉴
+![메뉴](docs/screenshots/menu.png)
+
+### 퀴즈 추가
+![퀴즈 추가](docs/screenshots/add_quiz.png)
+
+### 퀴즈 목록
+다시 실행해도 추가한 퀴즈가 유지됩니다.
+
+![퀴즈 목록](docs/screenshots/list.png)
+
+### 퀴즈 풀기 (랜덤 출제)
+![퀴즈 풀기](docs/screenshots/play.png)
+
+### 최고 점수
+![최고 점수](docs/screenshots/score.png)
+
+### Git 커밋 기록
+![git log](docs/screenshots/git_log.png)
