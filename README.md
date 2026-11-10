@@ -118,3 +118,89 @@ E1-2/
 
 ### Git 커밋 기록
 ![git log](docs/screenshots/git_log.png)
+
+## 9. Git 작업 기록
+- 저장소: https://github.com/reru721001-sketch/E1-2
+- 커밋 수: 이 섹션 작성 시점 기준 **16개** (일반 커밋 15개 + 병합 커밋 1개), 이후 README 보강 커밋 추가
+- 브랜치: `main`, `feature/play-quiz` (퀴즈 풀기 기능을 별도 브랜치에서 개발 후 `--no-ff`로 병합)
+- 확인 명령: `git log --oneline --graph`, `git rev-list --count HEAD`
+
+### 커밋 그래프 (`git log --oneline --graph`)
+```
+* c321aab Feat: 손상 파일 백업(state.json.bak) 및 안전한 저장 구현
+* 07f99b0 Docs: 실행 화면 스크린샷 추가 및 README에 첨부
+* e0a7f03 Docs: clone 실습용 README 문구 추가
+* 4cbc35a Docs: README 작성 (개요, 개발 환경, 실행 방법, 기능, 파일 구조, state.json 설명)
+* 6c13c09 Chore: 기본 상태의 state.json 추가
+* 1b650e4 Feat: 퀴즈 랜덤 출제 기능 추가 (보너스)
+* c4ab24c Feat: state.json 저장/불러오기 및 손상 파일 복구 구현
+* 95f1daf Feat: 최고 점수 갱신 및 점수 확인 기능 구현
+* 35c0224 Feat: 퀴즈 목록 보기 기능 구현
+* c2a5aef Feat: 퀴즈 추가 기능 구현 (문제, 선택지, 정답 입력 검증)
+*   bc9620e Merge: feature/play-quiz 브랜치 병합
+|\
+| * 52fe529 Feat: 퀴즈 풀기 기능 구현 (출제, 채점, 결과 표시)
+|/
+* dc85e65 Feat: 대한민국 상식 기본 퀴즈 5개 추가
+* 7c59aa3 Feat: Quiz 클래스 구현 (출력, 정답 확인, dict 변환)
+* 006fb59 Feat: 메뉴 화면 및 숫자 입력 검증 구현
+* bf3bb3d Chore: 프로젝트 초기 설정 (.gitignore, README 추가)
+```
+
+### 브랜치 생성 및 병합 과정
+그래프에서 `|/`는 브랜치가 갈라진 지점, `|\`는 다시 합쳐진 지점입니다.
+`dc85e65`(기본 퀴즈 추가) 이후 `feature/play-quiz` 브랜치를 만들어 `52fe529`(퀴즈 풀기)를 개발했고, `bc9620e`에서 `main`에 병합했습니다.
+
+```bash
+git checkout -b feature/play-quiz        # 브랜치 생성 및 이동
+git add main.py
+git commit -m "Feat: 퀴즈 풀기 기능 구현 (출제, 채점, 결과 표시)"
+git push -u origin feature/play-quiz     # 브랜치를 원격에 업로드
+git checkout main                        # main으로 이동 (이 시점의 main에는 퀴즈 풀기 기능이 없음)
+git merge --no-ff feature/play-quiz -m "Merge: feature/play-quiz 브랜치 병합"
+git push
+```
+`--no-ff` 옵션을 사용해 병합 커밋을 남겼기 때문에, 그래프에서 브랜치 작업 기록이 구분되어 보입니다.
+
+### clone / pull 실습
+```bash
+git clone https://github.com/reru721001-sketch/E1-2.git E1-2-clone   # 다른 폴더로 복제
+cd E1-2-clone
+# README.md 끝에 문장 추가
+git add README.md
+git commit -m "Docs: clone 실습용 README 문구 추가"
+git push
+cd ..\E1-2
+git pull                                  # Fast-forward로 e0a7f03 반영
+```
+`7. 데이터 파일 설명` 끝의 인용문(`> clone한 저장소에서 추가한 문장입니다.`)이 이 실습으로 추가된 문장입니다.
+
+### 사용한 Git 명령
+| 명령 | 사용한 곳 |
+|---|---|
+| `git init` | 저장소 초기화 |
+| `git add` / `git commit` | 모든 기능 단위 커밋 |
+| `git push` | 매 커밋 후 원격 반영, 브랜치 업로드 (`-u`) |
+| `git checkout` | 브랜치 생성(`-b`) 및 `main` 복귀 |
+| `git merge` | `feature/play-quiz` 병합 |
+| `git clone` | `E1-2-clone` 폴더로 복제 |
+| `git pull` | clone 폴더에서 push한 변경을 원래 폴더로 반영 |
+
+## 10. 커밋 규칙
+### 커밋 단위
+- **기능 하나 = 커밋 하나**: 메뉴, Quiz 클래스, 기본 데이터, 풀기, 추가, 목록, 점수, 저장/불러오기, 랜덤 출제를 각각 따로 커밋했습니다.
+- 커밋하기 전에 `python main.py`로 해당 기능이 동작하는지 확인합니다. (실행되지 않는 상태로 커밋하지 않음)
+- 문서 변경과 코드 변경은 커밋을 나눕니다.
+
+### 메시지 형식
+```
+<타입>: <무엇을 했는지 한국어로 요약> (필요하면 괄호 안에 세부 내용)
+```
+
+| 타입 | 의미 | 예시 |
+|---|---|---|
+| `Feat` | 새 기능 추가 | `Feat: 퀴즈 추가 기능 구현 (문제, 선택지, 정답 입력 검증)` |
+| `Docs` | 문서 수정 | `Docs: README 작성 (개요, 실행 방법, 기능, 파일 구조, state.json 설명)` |
+| `Chore` | 설정, 데이터 정리 등 기능 외 작업 | `Chore: 기본 상태의 state.json 추가` |
+| `Merge` | 브랜치 병합 | `Merge: feature/play-quiz 브랜치 병합` |
+| `Fix` | 버그 수정 (필요 시 사용) | `Fix: 정답 번호 범위 검사 오류 수정` |
