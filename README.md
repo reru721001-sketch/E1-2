@@ -126,12 +126,15 @@ E1-2/
 
 ## 9. Git 작업 기록
 - 저장소: https://github.com/reru721001-sketch/E1-2
-- 커밋 수: 이 섹션 작성 시점 기준 **16개** (일반 커밋 15개 + 병합 커밋 1개), 이후 README 보강 커밋 추가
+- 커밋 수: 이 섹션 작성 시점 기준 **19개** (일반 커밋 18개 + 병합 커밋 1개), 그래프 최신화 커밋은 제외
 - 브랜치: `main`, `feature/play-quiz` (퀴즈 풀기 기능을 별도 브랜치에서 개발 후 `--no-ff`로 병합)
 - 확인 명령: `git log --oneline --graph`, `git rev-list --count HEAD`
 
 ### 커밋 그래프 (`git log --oneline --graph`)
 ```
+* 6c94efd Docs: README에 1000개 확장성 측정 결과와 백업/복구 절차 추가
+* 9af4b78 Docs: README에 설계 설명(클래스 추상화·재사용, 로직 분리, 실행 흐름, 수정 위치) 추가
+* f3a441c Docs: README에 Git 작업 기록(커밋 그래프, 브랜치 병합, clone/pull)과 커밋 규칙 추가
 * 90acc2e Feat: 손상 파일 백업(state.json.bak) 및 안전한 저장 구현
 * 07f99b0 Docs: 실행 화면 스크린샷 추가 및 README에 첨부
 * e0a7f03 Docs: clone 실습용 README 문구 추가
