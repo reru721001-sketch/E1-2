@@ -90,7 +90,19 @@ class QuizGame:
         answer = self.get_number("정답 번호 (1-4): ", 1, 4)
 
         self.quizzes.append(Quiz(question, choices, answer))
-        print("\n✅ 퀴즈가 추가되었습니다!")    
+        print("\n✅ 퀴즈가 추가되었습니다!")
+
+    def show_quizzes(self):
+        """등록된 퀴즈의 문제 목록을 보여준다."""
+        if len(self.quizzes) == 0:
+            print("⚠️ 등록된 퀴즈가 없습니다.")
+            return
+
+        print(f"\n📋 등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+        print("-" * 40)
+        for number, quiz in enumerate(self.quizzes, start=1):
+            print(f"[{number}] {quiz.question}")
+        print("-" * 40) 
 
     def run(self):
         """프로그램의 메인 반복 흐름"""
@@ -102,6 +114,8 @@ class QuizGame:
                 self.play_quiz()
             elif choice == 2:
                 self.add_quiz()
+            elif choice == 3:
+                self.show_quizzes()
             elif choice == 5:
                 print("👋 프로그램을 종료합니다.")
                 break
